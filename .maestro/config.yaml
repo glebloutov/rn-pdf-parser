@@ -1,0 +1,14 @@
+# Maestro workspace config. Flows assume: mock running on the host (npm run mock),
+# Android `adb reverse tcp:8787 tcp:8787`, fixtures provisioned (npm run e2e:fixtures:<platform>),
+# device language English.
+flows:
+  - flows/*
+executionOrder:
+  continueOnFailure: true
+  flowsOrder:
+    # Maestro matches flowsOrder against each flow's `name`, not its file name
+    - 01 happy
+    - 02 lost_ack + relaunch
+    - 03 stale_status
+    - 04 delete_failure
+    - 05 spoofed + oversize

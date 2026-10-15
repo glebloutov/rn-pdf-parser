@@ -1,0 +1,27 @@
+# lost_ack: first POST creates the job but the response is dropped. After relaunch the app finds
+# the job by key without re-sending; the mock shows newJobs=1 and createRequests=1.
+appId: com.rnpdfparser
+name: 02 lost_ack + relaunch
+---
+- runFlow: { file: ../subflows/mock.yaml, env: { ACTION: reset, MODE: none } }
+- runFlow: { file: ../subflows/mock.yaml, env: { ACTION: scenario, MODE: lost_ack } }
+- launchApp:
+    clearState: true
+- runFlow: { file: ../subflows/pick-fixture.yaml, env: { FILE: statement.csv, FILE_ID: "statement, csv" } }
+- runFlow: { file: ../subflows/scroll-to.yaml, env: { ID: confirm-upload-button } }
+- tapOn:
+    id: confirm-upload-button
+- extendedWaitUntil:
+    visible: ".*Upload result unknown.*"
+    timeout: 20000
+- assertVisible:
+    id: check-again-button
+- stopApp
+- launchApp:
+    clearState: false
+- extendedWaitUntil:
+    visible: ".*Ready.*"
+    timeout: 60000
+- runFlow: { file: ../subflows/mock.yaml, env: { ACTION: state, MODE: none } }
+- assertTrue: ${output.stats.newJobs == 1}
+- assertTrue: ${output.stats.createRequests == 1}

@@ -1,0 +1,13 @@
+# spoofed + oversize: both rejected on the device before any POST — createRequests stays 0.
+appId: com.rnpdfparser
+name: 05 spoofed + oversize
+---
+- runFlow: { file: ../subflows/mock.yaml, env: { ACTION: reset, MODE: none } }
+- launchApp:
+    clearState: true
+- runFlow: { file: ../subflows/pick-fixture.yaml, env: { FILE: spoofed.pdf, FILE_ID: "spoofed, pdf" } }
+- assertVisible: ".*not a PDF or CSV statement.*"
+- runFlow: { file: ../subflows/pick-fixture.yaml, env: { FILE: oversize.csv, FILE_ID: "oversize, csv" } }
+- assertVisible: ".*larger than 10 MiB.*"
+- runFlow: { file: ../subflows/mock.yaml, env: { ACTION: state, MODE: none } }
+- assertTrue: ${output.stats.createRequests == 0}

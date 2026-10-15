@@ -1,0 +1,30 @@
+# stale_status: after ready/revision 3 the mock answers processing/revision 2. The UI must not roll back.
+appId: com.rnpdfparser
+name: 03 stale_status
+---
+- runFlow: { file: ../subflows/mock.yaml, env: { ACTION: reset, MODE: none } }
+- launchApp:
+    clearState: true
+- runFlow: { file: ../subflows/pick-fixture.yaml, env: { FILE: statement.pdf, FILE_ID: "statement, pdf" } }
+- runFlow: { file: ../subflows/scroll-to.yaml, env: { ID: confirm-upload-button } }
+- tapOn:
+    id: confirm-upload-button
+- extendedWaitUntil:
+    visible: ".*Ready.*"
+    timeout: 15000
+- runFlow: { file: ../subflows/mock.yaml, env: { ACTION: scenario, MODE: stale_status } }
+- runFlow: { file: ../subflows/scroll-to.yaml, env: { ID: refresh-button } }
+- tapOn:
+    id: refresh-button
+- runFlow: { file: ../subflows/scroll-to.yaml, env: { ID: refresh-button } }
+- tapOn:
+    id: refresh-button
+- runFlow: { file: ../subflows/scroll-to.yaml, env: { ID: refresh-button } }
+- tapOn:
+    id: refresh-button
+- runFlow: ../subflows/scroll-to-top.yaml
+- assertVisible: ".*Ready.*"
+- assertVisible: ".*revision 3.*"
+# The status must never become "Processing" (the "Ignored … processing · revision 2" line is expected)
+- assertNotVisible: "Processing.*"
+- assertVisible: ".*Ignored outdated server answers.*revision 2.*"

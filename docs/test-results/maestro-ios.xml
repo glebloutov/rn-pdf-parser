@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites>
+  <testsuite name="Test Suite" device="iPhone 17 Pro - iOS 26.5 - A741F438-C7F2-4E4E-8CFC-293AA847985D" tests="5" failures="0" time="362.23" timestamp="2026-10-15T20:05:13">
+    <testcase id="01 happy" name="01 happy" classname="01 happy" file=".maestro/flows/01-happy.yaml" time="113.943" timestamp="2026-10-15T20:05:13" status="SUCCESS"/>
+    <testcase id="02 lost_ack + relaunch" name="02 lost_ack + relaunch" classname="02 lost_ack + relaunch" file=".maestro/flows/02-lost-ack-relaunch.yaml" time="35.933" timestamp="2026-10-15T20:07:07" status="SUCCESS"/>
+    <testcase id="03 stale_status" name="03 stale_status" classname="03 stale_status" file=".maestro/flows/03-stale-status.yaml" time="70.298" timestamp="2026-10-15T20:07:43" status="SUCCESS"/>
+    <testcase id="04 delete_failure" name="04 delete_failure" classname="04 delete_failure" file=".maestro/flows/04-delete-failure.yaml" time="97.506" timestamp="2026-10-15T20:08:53" status="SUCCESS"/>
+    <testcase id="05 spoofed + oversize" name="05 spoofed + oversize" classname="05 spoofed + oversize" file=".maestro/flows/05-reject-spoofed-oversize.yaml" time="44.493" timestamp="2026-10-15T20:10:31" status="SUCCESS"/>
+  </testsuite>
+</testsuites>

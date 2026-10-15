@@ -1,0 +1,53 @@
+# happy: file really sent, 202 shown as queued (not a report), ready shows mock data, details, delete.
+appId: com.rnpdfparser
+name: 01 happy
+---
+- runFlow: { file: ../subflows/mock.yaml, env: { ACTION: reset, MODE: happy } }
+- launchApp:
+    clearState: true
+- runFlow: { file: ../subflows/pick-fixture.yaml, env: { FILE: statement.csv, FILE_ID: "statement, csv" } }
+- assertVisible: ".*statement\\.csv.*"
+- assertVisible: ".*CSV.*"
+- runFlow: { file: ../subflows/scroll-to.yaml, env: { ID: confirm-upload-button } }
+- tapOn:
+    id: confirm-upload-button
+- extendedWaitUntil:
+    visible: ".*Ready.*"
+    timeout: 15000
+- runFlow: { file: ../subflows/scroll-to-text.yaml, env: { TEXT: ".*StreamBeam.*" } }
+- assertVisible: ".*StreamBeam.*"
+- runFlow: { file: ../subflows/scroll-to-text.yaml, env: { TEXT: ".*BrightGrid.*" } }
+- assertVisible: ".*BrightGrid.*"
+- runFlow: { file: ../subflows/scroll-to.yaml, env: { ID: monthly-total } }
+- runFlow: { file: ../subflows/mock.yaml, env: { ACTION: state, MODE: none } }
+- assertTrue: ${output.stats.newJobs == 1}
+- runFlow: { file: ../subflows/scroll-to.yaml, env: { ID: charge-row-rec-001-details } }
+- tapOn:
+    id: charge-row-rec-001-details
+- assertVisible:
+    id: charge-details
+- assertNotVisible: ".*[Cc]ancel.*"
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - back
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - tapOn:
+          id: header-back-button
+- runFlow: { file: ../subflows/scroll-to.yaml, env: { ID: delete-button } }
+- tapOn:
+    id: delete-button
+- runFlow: { file: ../subflows/scroll-to.yaml, env: { ID: start-new-button } }
+- runFlow: ../subflows/scroll-to-top.yaml
+- assertVisible: ".*Deleted on the server.*"
+- runFlow: { file: ../subflows/mock.yaml, env: { ACTION: state, MODE: none } }
+- assertTrue: ${output.jobStatus == 'deleted'}
+- runFlow: { file: ../subflows/scroll-to.yaml, env: { ID: start-new-button } }
+- tapOn:
+    id: start-new-button
+- assertVisible:
+    id: pick-file-button

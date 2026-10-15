@@ -1,0 +1,11 @@
+# Scrolls the screen back to the top. Status, job line and deletion notice always sit at the top of the
+# home screen; scrolling up to them by id is unreliable when they are half under the header.
+appId: com.rnpdfparser
+---
+- repeat:
+    times: 4
+    commands:
+      - swipe:
+          start: 50%, 30%
+          end: 50%, 85%
+          duration: 300

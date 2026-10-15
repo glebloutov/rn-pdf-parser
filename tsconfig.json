@@ -1,0 +1,15 @@
+{
+  "extends": "@react-native/typescript-config",
+  "compilerOptions": {
+    "noUncheckedIndexedAccess": true,
+    "verbatimModuleSyntax": true,
+    "paths": {
+      "@app/*": ["./src/app/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@features/*": ["./src/features/*"],
+      "@test-support/*": ["./jest/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "index.js"],
+  "exclude": ["**/node_modules", "**/Pods", "mock-server", "src/**/__tests__/**", "src/**/*.test.ts", "src/**/*.test.tsx"]
+}

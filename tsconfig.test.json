@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["jest", "node"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "jest/**/*.ts", "index.js"],
+  "exclude": ["**/node_modules", "**/Pods", "mock-server"]
+}

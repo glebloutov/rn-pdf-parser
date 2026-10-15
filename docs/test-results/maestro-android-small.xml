@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites>
+  <testsuite name="Test Suite" device="Small_Phone_API_34" tests="5" failures="0" time="353.895" timestamp="2026-10-15T22:59:19">
+    <testcase id="01 happy" name="01 happy" classname="01 happy" file=".maestro/flows/01-happy.yaml" time="106.149" timestamp="2026-10-15T22:59:19" status="SUCCESS"/>
+    <testcase id="02 lost_ack + relaunch" name="02 lost_ack + relaunch" classname="02 lost_ack + relaunch" file=".maestro/flows/02-lost-ack-relaunch.yaml" time="40.097" timestamp="2026-10-15T23:01:06" status="SUCCESS"/>
+    <testcase id="03 stale_status" name="03 stale_status" classname="03 stale_status" file=".maestro/flows/03-stale-status.yaml" time="69.45" timestamp="2026-10-15T23:01:46" status="SUCCESS"/>
+    <testcase id="04 delete_failure" name="04 delete_failure" classname="04 delete_failure" file=".maestro/flows/04-delete-failure.yaml" time="95.605" timestamp="2026-10-15T23:02:55" status="SUCCESS"/>
+    <testcase id="05 spoofed + oversize" name="05 spoofed + oversize" classname="05 spoofed + oversize" file=".maestro/flows/05-reject-spoofed-oversize.yaml" time="42.521" timestamp="2026-10-15T23:04:31" status="SUCCESS"/>
+  </testsuite>
+</testsuites>

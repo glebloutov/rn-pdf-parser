@@ -1,0 +1,35 @@
+# Scrolls until the element with id ${ID} is fully visible, centred where possible (down first, then up).
+# Needed on small screens / large system fonts, where actions and texts can be below or above the fold.
+# Centring matters on iOS: a partly visible element, or one under the translucent header, counts as
+# visible, and a tap on its hidden part is lost. Elements at the very top can't be centred → plain fallback.
+appId: com.rnpdfparser
+---
+- scrollUntilVisible:
+    element:
+      id: ${ID}
+    direction: DOWN
+    centerElement: true
+    timeout: 10000
+    optional: true
+- runFlow:
+    when:
+      notVisible:
+        id: ${ID}
+    commands:
+      - scrollUntilVisible:
+          element:
+            id: ${ID}
+          direction: UP
+          centerElement: true
+          timeout: 10000
+          optional: true
+- runFlow:
+    when:
+      notVisible:
+        id: ${ID}
+    commands:
+      - scrollUntilVisible:
+          element:
+            id: ${ID}
+          direction: UP
+          timeout: 20000

@@ -1,0 +1,15 @@
+export enum LogEvent {
+  DeletionAccepted = 'import.deletion_accepted',
+  DeletionNotConfirmed = 'import.deletion_not_confirmed',
+  DeletionRequested = 'import.deletion_requested',
+  FileRejected = 'import.file_rejected',
+  FileSelected = 'import.file_selected',
+  ImportCleared = 'import.cleared',
+  ImportFailed = 'import.failed',
+  ImportRecovered = 'import.recovered',
+  ImportSubmitted = 'import.submitted',
+  JobUpdated = 'import.job_updated',
+  OrphanCopiesRemoved = 'import.orphan_copies_removed',
+  SnapshotIgnored = 'import.snapshot_ignored',
+  SubmitUncertain = 'import.submit_uncertain',
+}

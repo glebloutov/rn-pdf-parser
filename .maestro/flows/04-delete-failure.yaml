@@ -1,0 +1,34 @@
+# delete_failure: DELETE returns 503 → UI must not claim deletion. Switch to happy, retry with the
+# same key → deleting → deleted.
+appId: com.rnpdfparser
+name: 04 delete_failure
+---
+- runFlow: { file: ../subflows/mock.yaml, env: { ACTION: reset, MODE: none } }
+- launchApp:
+    clearState: true
+- runFlow: { file: ../subflows/pick-fixture.yaml, env: { FILE: statement.csv, FILE_ID: "statement, csv" } }
+- runFlow: { file: ../subflows/scroll-to.yaml, env: { ID: confirm-upload-button } }
+- tapOn:
+    id: confirm-upload-button
+- extendedWaitUntil:
+    visible: ".*Ready.*"
+    timeout: 15000
+- runFlow: { file: ../subflows/mock.yaml, env: { ACTION: scenario, MODE: delete_failure } }
+- runFlow: { file: ../subflows/scroll-to.yaml, env: { ID: delete-button } }
+- tapOn:
+    id: delete-button
+- runFlow: { file: ../subflows/scroll-to.yaml, env: { ID: retry-deletion-button } }
+- runFlow: ../subflows/scroll-to-top.yaml
+- assertVisible: ".*Deletion was not confirmed.*"
+- assertNotVisible: ".*Deleted on the server.*"
+- runFlow: { file: ../subflows/mock.yaml, env: { ACTION: state, MODE: none } }
+- assertTrue: ${output.jobStatus != 'deleted'}
+- runFlow: { file: ../subflows/mock.yaml, env: { ACTION: scenario, MODE: happy } }
+- runFlow: { file: ../subflows/scroll-to.yaml, env: { ID: retry-deletion-button } }
+- tapOn:
+    id: retry-deletion-button
+- runFlow: { file: ../subflows/scroll-to.yaml, env: { ID: start-new-button } }
+- runFlow: ../subflows/scroll-to-top.yaml
+- assertVisible: ".*Deleted on the server.*"
+- runFlow: { file: ../subflows/mock.yaml, env: { ACTION: state, MODE: none } }
+- assertTrue: ${output.stats.deleteRequests == 2}

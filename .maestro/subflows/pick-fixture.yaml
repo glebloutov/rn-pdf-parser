@@ -1,0 +1,73 @@
+# Opens the app's picker and selects a fixture in the OS document picker.
+#   FILE    — file name, used on Android (DocumentsUI shows full names), e.g. statement.csv
+#   FILE_ID — iOS Files cell id "<name>, <extension>", e.g. "statement, csv" (labels alone are ambiguous)
+# iOS reopens the picker in the last visited folder, so each navigation step is conditional.
+# Verified on iOS 26.5 and Android 14 (DocumentsUI);
+# other OS versions may need adjusting.
+appId: com.rnpdfparser
+---
+# A debug build on an Android emulator can take 20+ s to show the first screen after clearState
+- extendedWaitUntil:
+    visible:
+      id: pick-file-button
+    timeout: 60000
+- runFlow: { file: scroll-to.yaml, env: { ID: pick-file-button } }
+- tapOn:
+    id: pick-file-button
+- waitForAnimationToEnd
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - tapOn:
+          text: "Show roots"
+          optional: true
+      - tapOn:
+          text: "Downloads"
+          optional: true
+      - scrollUntilVisible:
+          element:
+            text: ${FILE}
+          optional: true
+      - tapOn:
+          text: ${FILE}
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - runFlow:
+          when:
+            notVisible:
+              id: ${FILE_ID}
+          commands:
+            # A fresh simulator starts in Recents, before any folder has been opened.
+            - runFlow:
+                when:
+                  visible:
+                    id: "DOC.browsingRoot Source: .*RecentDocuments.*"
+                commands:
+                  - tapOn: "Browse"
+            - runFlow:
+                when:
+                  notVisible:
+                    id: "rn-pdf-parser-fixtures, Folder"
+                  visible: "On My iPhone"
+                commands:
+                  - tapOn: "On My iPhone"
+            - runFlow:
+                when:
+                  visible:
+                    id: "rn-pdf-parser-fixtures, Folder"
+                commands:
+                  - tapOn:
+                      id: "rn-pdf-parser-fixtures, Folder"
+      # With large system fonts the Files grid pushes cells under the bottom tab bar
+      - scrollUntilVisible:
+          element:
+            id: ${FILE_ID}
+          direction: DOWN
+          centerElement: true
+          timeout: 10000
+          optional: true
+      - tapOn:
+          id: ${FILE_ID}

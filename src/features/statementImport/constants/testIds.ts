@@ -1,0 +1,20 @@
+/** Stable selectors for RNTL and Maestro flows. */
+export const TestIds = {
+  chargeDetails: 'charge-details',
+  chargeRow: 'charge-row',
+  checkAgainButton: 'check-again-button',
+  clearLocalDataButton: 'clear-local-data-button',
+  confirmCancelButton: 'confirm-cancel-button',
+  confirmUploadButton: 'confirm-upload-button',
+  deleteButton: 'delete-button',
+  deletionNotice: 'deletion-notice',
+  monthlyTotal: 'monthly-total',
+  outdatedResponses: 'outdated-responses',
+  pickFileButton: 'pick-file-button',
+  refreshButton: 'refresh-button',
+  retryDeletionButton: 'retry-deletion-button',
+  retryUploadButton: 'retry-upload-button',
+  startNewButton: 'start-new-button',
+  statusBanner: 'status-banner',
+  statusMeta: 'status-meta',
+} as const;

@@ -1,0 +1,7 @@
+appId: com.rnpdfparser
+---
+- runScript:
+    file: ../scripts/mock.js
+    env:
+      ACTION: ${ACTION}
+      MODE: ${MODE}
